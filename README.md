@@ -1,2 +1,2 @@
-# GlobalUDPChat
-UDP чат в глобальной сети
+# GlobalTCPPixelBattle
+TCP пиксель батл в глобальной сети
