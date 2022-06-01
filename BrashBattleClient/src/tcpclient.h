@@ -42,7 +42,13 @@ namespace TCPManager
         //! \param data
         //!
         void newTimer( QByteArray & data );
+        //!
+        //! \brief connected Сигнал, испускаемый при подключении к серверу
+        //!
         void connected();
+        //!
+        //! \brief disconnected Сигнал, испускаемый при отключении от сервера
+        //!
         void disconnected();
 
     private slots:

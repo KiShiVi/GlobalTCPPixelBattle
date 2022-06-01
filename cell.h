@@ -11,6 +11,9 @@
 #include <QDataStream>
 
 
+//!
+//! \brief The COLOR_TYPE enum Перечисление цветов пикселя
+//!
 enum COLOR_TYPE
 {
     BLACK,

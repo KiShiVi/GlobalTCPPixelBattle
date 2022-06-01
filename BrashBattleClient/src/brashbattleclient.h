@@ -6,7 +6,7 @@
 #include <QByteArray>
 #include <QLCDNumber>
 
-#define HOST "IP"   //!< IP сервера
+#define HOST "IP"               //!< IP сервера
 #define PORT 2673               //!< Порт сервера
 
 //!
@@ -43,14 +43,24 @@ private slots:
     //! \param sender Указатель на пиксель
     //!
     void onClicked( Cell * sender );
+    //!
+    //! \brief setCurrentColor Установить текущий цвет для рисования
+    //! \param sender Указатель на пиксель с выбранным цветом
+    //!
     void setCurrentColor( Cell * sender );
+    //!
+    //! \brief onConnected Реакция на подключение к серверу
+    //!
     void onConnected();
+    //!
+    //! \brief onDisconnected Реакция на отключение от сервера
+    //!
     void onDisconnected();
 
 private:
     quint8                      m_currentColor;     //!< Выбранный цвет;
-    Cell                    *   p_currentColorCell;
-    Cell                    *   p_connectionState;
+    Cell                    *   p_currentColorCell; //!< Указатель на пискель с выбранным цветом
+    Cell                    *   p_connectionState;  //!< Указатель на индикатор состояния подключения к серверу
     QLCDNumber              *   p_lcd;              //!< Указатель на счетчик времени
     QList<QList<Cell *> >       cells;              //!< Массив пикселей
     TCPManager::TCPClient   *   p_client;           //!< Указатель на TCP клиент
