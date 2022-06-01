@@ -42,6 +42,8 @@ namespace TCPManager
         //! \param data
         //!
         void newTimer( QByteArray & data );
+        void connected();
+        void disconnected();
 
     private slots:
         //!

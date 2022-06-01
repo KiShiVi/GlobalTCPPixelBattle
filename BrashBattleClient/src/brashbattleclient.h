@@ -6,7 +6,7 @@
 #include <QByteArray>
 #include <QLCDNumber>
 
-#define HOST "IP"               //!< IP сервера
+#define HOST "IP"   //!< IP сервера
 #define PORT 2673               //!< Порт сервера
 
 //!
@@ -43,9 +43,15 @@ private slots:
     //! \param sender Указатель на пиксель
     //!
     void onClicked( Cell * sender );
+    void setCurrentColor( Cell * sender );
+    void onConnected();
+    void onDisconnected();
 
 private:
-    QLCDNumber              *   p_lcd;      //!< Указатель на счетчик времени
-    QList<QList<Cell *> >       cells;      //!< Массив пикселей
-    TCPManager::TCPClient   *   p_client;   //!< Указатель на TCP клиент
+    quint8                      m_currentColor;     //!< Выбранный цвет;
+    Cell                    *   p_currentColorCell;
+    Cell                    *   p_connectionState;
+    QLCDNumber              *   p_lcd;              //!< Указатель на счетчик времени
+    QList<QList<Cell *> >       cells;              //!< Массив пикселей
+    TCPManager::TCPClient   *   p_client;           //!< Указатель на TCP клиент
 };

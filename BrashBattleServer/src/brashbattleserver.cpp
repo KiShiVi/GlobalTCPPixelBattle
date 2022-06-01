@@ -45,7 +45,7 @@ BrashBattleServer::~BrashBattleServer()
 
 void BrashBattleServer::sendTimers()
 {
-    qDebug() << "--- SENDING TIMERS ---";
+    //qDebug() << "--- SENDING TIMERS ---";
 
     foreach ( quint32 host, timeControl.keys() ) {
         qDebug() << "--- SENDING TIMER TO ---" << QHostAddress( host );
@@ -60,7 +60,7 @@ void BrashBattleServer::sendTimers()
 
 void BrashBattleServer::sendStates()
 {
-    qDebug() << "--- SENDING STATES ---";
+    //qDebug() << "--- SENDING STATES ---";
     QByteArray buffer;
     QDataStream out( &buffer, QIODevice::WriteOnly );
 

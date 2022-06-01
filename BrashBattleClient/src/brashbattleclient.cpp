@@ -5,6 +5,8 @@
 #include <QHostAddress>
 #include <QGridLayout>
 #include <QDateTime>
+#include <QHBoxLayout>
+#include <QSpacerItem>
 
 #define SIZE 16
 
@@ -19,8 +21,10 @@ BrashBattleClient::BrashBattleClient( QWidget * parent )
 
     connect( p_client, SIGNAL( newData( QByteArray & ) ), this, SLOT( onNewData( QByteArray & ) ) );
     connect( p_client, SIGNAL( newTimer( QByteArray & ) ), this, SLOT( onNewTimer( QByteArray & ) ) );
+    connect( p_client, SIGNAL( connected() ), this, SLOT( onConnected() ) );
+    connect( p_client, SIGNAL( disconnected() ), this, SLOT( onDisconnected() ) );
 
-    QGridLayout * grd = new QGridLayout( this );
+    QGridLayout * grd = new QGridLayout ();
     grd->setSpacing( 0 );
 
     for ( int i = 0; i < SIZE; ++i )
@@ -36,6 +40,37 @@ BrashBattleClient::BrashBattleClient( QWidget * parent )
     }
 
     grd->addWidget( p_lcd, SIZE, 0, 3, SIZE );
+
+    QGridLayout * colorLayout   = new QGridLayout();
+    QHBoxLayout * mainLayout    = new QHBoxLayout( this );
+
+    for ( int i = 0; i < 16; ++i )
+    {
+        Cell * cell = new Cell( 0, 0 );
+        cell->setColor( i );
+        colorLayout->addWidget( cell, (i % 8) + 1, i / 8, 1, 1 );
+        connect( cell, SIGNAL( clicked( Cell * ) ), this, SLOT( setCurrentColor( Cell * ) ) );
+    }
+
+    p_currentColorCell = new Cell( 0, 0 );
+    p_currentColorCell->setFixedSize( 48, 48 );
+    colorLayout->addWidget( p_currentColorCell, 9, 0, 2, 2 );
+    p_currentColorCell->setColor( WHITE );
+
+    p_connectionState = new Cell( 0, 0 );
+    p_connectionState->setFixedSize( 16, 16 );
+    colorLayout->addWidget( p_connectionState, 10, 0, 1, 1 );
+    p_connectionState->setColor( RED );
+
+    colorLayout->setSpacing( 1 );
+    colorLayout->setContentsMargins( 0, 0, 0, 0 );
+    //colorLayout->addItem( new QSpacerItem( 30, 100 ), 10, 0 );
+
+    mainLayout->addStretch( 1 );
+    mainLayout->addLayout( colorLayout );
+    mainLayout->addLayout( grd );
+
+    m_currentColor = BLACK;
 }
 
 BrashBattleClient::~BrashBattleClient()
@@ -89,6 +124,22 @@ void BrashBattleClient::onClicked( Cell * sender )
 
     //sender->setColor( 1 );
 
-    out << (char)DATA << sender->getX() << sender->getY() << (char)1; //sender->getColor();
+    out << (char)DATA << sender->getX() << sender->getY() << (char)m_currentColor; //sender->getColor();
     p_client->sendMessage( buffer );
+}
+
+void BrashBattleClient::setCurrentColor( Cell * sender )
+{
+    m_currentColor = sender->getColor();
+    p_currentColorCell->setColor( sender->getColor() );
+}
+
+void BrashBattleClient::onConnected()
+{
+    p_connectionState->setColor( LIME );
+}
+
+void BrashBattleClient::onDisconnected()
+{
+    p_connectionState->setColor( RED );
 }

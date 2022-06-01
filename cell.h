@@ -11,6 +11,26 @@
 #include <QDataStream>
 
 
+enum COLOR_TYPE
+{
+    BLACK,
+    GRAY,
+    SILVER,
+    WHITE,
+    FUCHSIA,
+    PURPLE,
+    RED,
+    MAROON,
+    YELLOW,
+    OLIVE,
+    LIME,
+    GREEN,
+    AQUA,
+    TEAL,
+    BLUE,
+    NAVY
+};
+
 //!
 //! \brief The PACKET_TYPE enum Тип отправляемого TCP пакета
 //!

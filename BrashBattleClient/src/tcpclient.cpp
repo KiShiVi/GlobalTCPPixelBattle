@@ -65,11 +65,13 @@ namespace TCPManager
     void TCPClient::onDisconnected()
     {
         qDebug() << "--- Connection Ended ---";
+        emit disconnected();
     }
 
     void TCPClient::onConnected()
     {
         qDebug() << "--- Successful connection ---";
+        emit connected();
     }
 }
 
